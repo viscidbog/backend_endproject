@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Search for a Hobby</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+  <body>
+    <h1>Search for a Hobby</h1>
+    <p>Use lowercase letters.</p>
+
+    <table>
+      <!-- search with title -->
+      <tr>
+        <form method="get" th:action="@{/findhobbytitle/{title}}">
+          <td><label for="title">Title: </label></td>
+          <td><input name="title" th:value="${title}" type="text" /></td>
+          <td>
+            <input type="submit" value="Submit" class="btn btn-success" />
+          </td>
+        </form>
+      </tr>
+
+      <!-- search with author -->
+      <tr>
+        <form method="get" th:action="@{/findhobbyauthor/{author}}">
+          <td><label for="author">Author: </label></td>
+          <td><input name="author" th:value="${author}" type="text" /></td>
+          <td>
+            <input type="submit" value="Submit" class="btn btn-success" />
+          </td>
+        </form>
+      </tr>
+
+      <!-- search with publication year -->
+      <tr>
+        <form
+          method="get"
+          th:action="@{/findhobbypublicationYear/{publicationYear}}"
+        >
+          <td><label for="publicationYear">Publication Year: </label></td>
+          <td>
+            <input
+              name="publicationYear"
+              th:value="${publicationYear}"
+              type="text"
+            />
+          </td>
+          <td>
+            <input type="submit" value="Submit" class="btn btn-success" />
+          </td>
+        </form>
+      </tr>
+
+      <!-- search with recommend -->
+      <tr>
+        <form method="get" th:action="@{/findhobbyrecommend/{recommend}}">
+          <td><label for="recommend">Recommended: </label></td>
+          <td>
+            <select id="recommend" th:name="recommend">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </td>
+          <td>
+            <input type="submit" value="Submit" class="btn btn-success" />
+          </td>
+        </form>
+      </tr>
+
+      <!-- search with description -->
+      <tr>
+        <form method="get" th:action="@{/findhobbydescription/{description}}">
+          <td><label for="description">Description: </label></td>
+          <td>
+            <input name="description" th:value="${description}" type="text" />
+          </td>
+          <td>
+            <input type="submit" value="Submit" class="btn btn-success" />
+          </td>
+        </form>
+      </tr>
+
+      <!-- search with type -->
+      <tr>
+        <form method="get" th:action="@{/findhobbytype/{hobbyType}}">
+          <td><label for="type">Type</label></td>
+          <td>
+            <select id="type" th:name="hobbyType" class="form-control">
+              <option
+                th:each="hobbyType: ${hobbytypes}"
+                th:value="${hobbyType.hobbyTypeId}"
+                th:text="${hobbyType.name}"
+              ></option>
+            </select>
+          </td>
+          <td>
+            <input type="submit" value="Submit" class="btn btn-success" />
+          </td>
+        </form>
+      </tr>
+
+      <!-- search with genre -->
+      <tr>
+        <form method="get" th:action="@{/findhobbygenre/{genre}}">
+          <td><label for="type">Genre</label></td>
+          <td>
+            <select id="type" th:name="genre" class="form-control">
+              <option
+                th:each="genre: ${genres}"
+                th:value="${genre.genreId}"
+                th:text="${genre.name}"
+              ></option>
+            </select>
+          </td>
+          <td>
+            <input type="submit" value="Submit" class="btn btn-success" />
+          </td>
+        </form>
+      </tr>
+    </table>
+    <a th:href="@{/index}" class="btn btn-success">Back to Hobbylist</a>
+  </body>
+</html>

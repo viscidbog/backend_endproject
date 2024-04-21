@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+  <head>
+    <title>Hobbylist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+  <body>
+    <h1>Hobbies What I Gone And Done Tried</h1>
+
+    <!--Login/logout functionality-->
+    <p>Logged in as <span sec:authentication="name"></span>.</p>
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Logout" class="btn btn-danger" />
+    </form>
+    <form th:action="@{/login}" method="get">
+      <input
+        type="submit"
+        value="Login as different user"
+        class="btn btn-success"
+      />
+    </form>
+
+    <table class="table table=striped">
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publication Year</th>
+        <th>Description</th>
+        <th>Recommended</th>
+        <th>Type</th>
+        <th>Genre(s)</th>
+        <th sec:authorize="hasAuthority('ADMIN')"></th>
+      </tr>
+      <tr th:each="hobby : ${hobbies}">
+        <td th:text="${hobby.title}"></td>
+        <td th:text="${hobby.author}"></td>
+        <td th:text="${hobby.publicationYear}"></td>
+        <td th:text="${hobby.description}"></td>
+        <td th:text="${hobby.recommend}"></td>
+        <!--This is to make sure the page works, even if the type is null-->
+        <td
+          th:text="${hobby.hobbyType != null ? hobby.hobbyType.name : 'N/A'}"
+        ></td>
+
+        <!--This iterates through the Set of genres-->
+        <td
+          th:each="item, iterStat : ${hobby.hobbyGenres}"
+          th:text="${item.name}"
+        ></td>
+
+        <!--Delete button-->
+        <td sec:authorize="hasAuthority('ADMIN')">
+          <a
+            th:href="@{delete/{hobbyId}(hobbyId=${hobby.hobbyId})}"
+            class="btn btn-danger"
+            >Delete</a
+          >
+
+          <!-- edit button -->
+        </td>
+        <td sec:authorize="hasAuthority('ADMIN')">
+          <a
+            th:href="@{/edithobby/{hobbyId}(hobbyId=${hobby.hobbyId})}"
+            class="btn btn-warning"
+            >Edit</a
+          >
+        </td>
+      </tr>
+    </table>
+
+    <!--buttons to add new hobbies and new genres-->
+    <div>
+      <a
+        sec:authorize="hasAuthority('ADMIN')"
+        th:href="@{/addhobby}"
+        class="btn btn-success"
+        >Add Hobby</a
+      >
+      <a
+        sec:authorize="hasAuthority('ADMIN')"
+        th:href="@{/addtype}"
+        class="btn btn-success"
+        >Add a Hobby Type</a
+      >
+
+      <a
+        sec:authorize="hasAuthority('ADMIN')"
+        th:href="@{/addgenre}"
+        class="btn btn-success"
+        >Add a Hobby Genre</a
+      >
+      <a th:href="@{/typelist}" class="btn btn-success">View Hobby Types</a>
+      <a th:href="@{/genrelist}" class="btn btn-success">View Hobby Genres</a>
+      <a th:href="@{/hobbysearch}" class="btn btn-success"
+        >Search for a Hobby</a
+      >
+    </div>
+  </body>
+</html>

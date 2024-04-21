@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Hobby Types</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+  <body>
+    <h1>Hobby Types:</h1>
+    <table class="table table=striped">
+      <tr>
+        <th>Name:</th>
+      </tr>
+      <tr th:each="hobbyType : ${hobbytypes}">
+        <td th:text="${hobbyType.name}"></td>
+        <td sec:authorize="hasAuthority('ADMIN')">
+          <a
+            th:href="@{deletetype/{hobbyTypeId}(hobbyTypeId=${hobbyType.hobbyTypeId})}"
+            class="btn btn-danger"
+            >Delete</a
+          >
+        </td>
+      </tr>
+    </table>
+
+    <a
+      sec:authorize="hasAuthority('ADMIN')"
+      th:href="@{/addtype}"
+      class="btn btn-success"
+      >Add Type</a
+    >
+    <a th:href="@{/index}" class="btn btn-success">Back to Hobbylist</a>
+  </body>
+</html>

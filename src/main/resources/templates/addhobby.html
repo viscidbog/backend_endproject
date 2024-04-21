@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Add Hobbies</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+  <body>
+    <h1>Add a Hobby:</h1>
+    <div>
+      <!--Form begins here-->
+      <form
+        th:object="${hobby}"
+        th:action="@{savehobby}"
+        action="#"
+        method="post"
+      >
+        <table>
+          <!--Title input-->
+          <tr>
+            <td><label for="title">Title: </label></td>
+            <td><input type="text" id="title" th:field="*{title}" /></td>
+            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+              Error
+            </td>
+          </tr>
+          <!--Author input-->
+          <tr>
+            <td><label for="author">Author:</label></td>
+            <td><input type="text" id="author" th:field="*{author}" /></td>
+            <td th:if="${#fields.hasErrors('author')}" th:errors="*{author}">
+              Error
+            </td>
+          </tr>
+          <!--PubYear input-->
+          <tr>
+            <td><label for="publication year">Publication Year: </label></td>
+            <td>
+              <input
+                type="text"
+                id="publicationYear"
+                th:field="*{publicationYear}"
+              />
+            </td>
+            <td
+              th:if="${#fields.hasErrors('publicationYear')}"
+              th:errors="*{publicationYear}"
+            >
+              Error
+            </td>
+          </tr>
+          <!--Description input-->
+          <tr>
+            <td><label for="description">Description: </label></td>
+            <td>
+              <textarea type="text" id="description" th:field="*{description}">
+              </textarea>
+            </td>
+            <td
+              th:if="${#fields.hasErrors('description')}"
+              th:errors="*{description}"
+            >
+              Error
+            </td>
+          </tr>
+          <!--Recommend input-->
+          <tr>
+            <td><label for="recommend">Recommended: </label></td>
+            <td>
+              <select id="recommend" th:field="*{recommend}">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </td>
+          </tr>
+          <!--Type input-->
+          <tr>
+            <td>
+              <label for="type">Type: </label>
+            </td>
+            <td>
+              <select id="type" th:field="*{hobbyType}" class="form-control">
+                <option
+                  th:each="hobbyType: ${hobbytypes}"
+                  th:value="${hobbyType.hobbyTypeId}"
+                  th:text="${hobbyType.name}"
+                ></option>
+              </select>
+            </td>
+          </tr>
+          <!--Genre input. Tästä voi valita monta kunhan valitsee ctrl-clickillä-->
+          <tr>
+            <td>
+              <label for="genre">Genre (multiple can be selected):</label>
+            </td>
+            <td>
+              <select
+                id="genre"
+                th:field="*{hobbyGenres}"
+                class="form-control"
+                multiple
+              >
+                <option
+                  th:each="Genre : ${genres}"
+                  th:value="${Genre.genreId}"
+                  th:text="${Genre.name}"
+                ></option>
+              </select>
+            </td>
+            <td
+              th:if="${#fields.hasErrors('hobbyGenres')}"
+              th:errors="*{hobbyGenres}"
+            >
+              Error
+            </td>
+          </tr>
+        </table>
+        <input type="submit" value="Submit" class="btn btn-success" />
+      </form>
+      <!--Form ends here-->
+    </div>
+  </body>
+</html>

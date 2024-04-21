@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Hobby Genres</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+  <body>
+    <h1>Hobby Genres:</h1>
+    <table class="table table=striped">
+      <tr>
+        <th>Name:</th>
+      </tr>
+      <tr th:each="genre : ${hobbygenres}">
+        <td th:text="${genre.name}"></td>
+        <td sec:authorize="hasAuthority('ADMIN')">
+          <a
+            th:href="@{deletegenre/{genreId}(genreId=${genre.genreId})}"
+            class="btn btn-danger"
+            th:field="deleteError"
+            >Delete</a
+          >
+        </td>
+      </tr>
+    </table>
+    <!-- this is an attempt to make an error message when trying to delete a type with hobbies associated with it
+    <div th:if="${#fields.hasErrors('deleteError')}" class="error-message">
+      <p th:text="${#fields.errors('deleteError')}">Error:</p>
+    </div>
+    -->
+    <a
+      sec:authorize="hasAuthority('ADMIN')"
+      th:href="@{/addgenre}"
+      class="btn btn-success"
+      >Add Genre</a
+    >
+    <a th:href="@{/index}" class="btn btn-success">Back to Hobbylist</a>
+  </body>
+</html>

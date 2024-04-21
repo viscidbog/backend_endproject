@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Add a Hobby Type</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+  <body>
+    <h1>Add a Hobby Type:</h1>
+    <div>
+      <form
+        th:object="${hobbytype}"
+        th:action="@{savetype}"
+        action="#"
+        method="post"
+      >
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" th:field="*{name}" />
+        </div>
+        <input type="submit" value="Submit" class="btn btn-success" />
+        <a th:href="@{/index}" class="btn btn-success">Back to Hobbylist</a>
+      </form>
+    </div>
+  </body>
+</html>

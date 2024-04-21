@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Edit hobbies</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <h1>Edit a Hobby:</h1>
+    <div>
+      <!--Form begins here-->
+      <form
+        th:object="${hobby}"
+        th:action="@{../savehobby}"
+        action="#"
+        method="post"
+      >
+        <!--hidden Id to get the specific hobby-->
+        <input
+          type="hidden"
+          id="hobbyId"
+          th:field="*{hobbyId}"
+          class="form-control"
+          readonly="readonly"
+        />
+        <!--Title input-->
+        <div>
+          <label for="title">Title: </label>
+          <input type="text" id="title" th:field="*{title}" />
+        </div>
+        <!--Author input-->
+        <div>
+          <label for="title">Author: </label>
+          <input type="text" id="author" th:field="*{author}" />
+        </div>
+        <!--PubYear input-->
+        <div>
+          <label for="title">Publication Year: </label>
+          <input
+            type="text"
+            id="publicationYear"
+            th:field="*{publicationYear}"
+          />
+        </div>
+        <!--Description input-->
+        <div>
+          <label for="title">Description: </label>
+          <textarea
+            type="text"
+            id="description"
+            th:field="*{description}"
+          ></textarea>
+        </div>
+        <!--Recommend input-->
+        <div>
+          <label for="recommend">Recommended: </label>
+          <select id="recommend" th:field="*{recommend}">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <!--Type input-->
+        <div>
+          <label for="type">Type</label>
+          <select id="type" th:field="*{hobbyType}" class="form-control">
+            <option
+              th:each="hobbyType: ${hobbytypes}"
+              th:value="${hobbyType.hobbyTypeId}"
+              th:text="${hobbyType.name}"
+            ></option>
+          </select>
+        </div>
+        <!--Genre input. Tästä voi valita monta kunhan valitsee ctrl-clickillä-->
+        <div>
+          <label for="genre">Genre (multiple can be selected):</label>
+          <select
+            id="genre"
+            th:field="*{hobbyGenres}"
+            class="form-control"
+            multiple
+          >
+            <option
+              th:each="Genre : ${genres}"
+              th:value="${Genre.genreId}"
+              th:text="${Genre.name}"
+            ></option>
+          </select>
+        </div>
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>
